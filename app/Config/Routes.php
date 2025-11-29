@@ -18,9 +18,12 @@ $routes->post('/user/create', 'User::create');
 $routes->get('/userlist', 'User::userListData');
 
 $routes->get('/visitorequest', 'VisitorRequest::index'); // add User Form
+$routes->get('/group_visito_request', 'VisitorRequest::groupVisitorRequestForm'); // add User Form
 $routes->get('/visitorlistdata', 'VisitorRequest::visitorData'); //to get The visiter Reuest List Data 
 $routes->get('/visitorequestlist', 'VisitorRequest::visitorDataListView'); // //to get The visiter Reuest View
 $routes->post('/visitorequest/create','VisitorRequest::submit');
+$routes->post('/visitorequest/create_group','VisitorRequest::groupSubmit');
+
 $routes->post('/approvalprocess', 'VisitorRequest::approvalProcess');//To Approval Process 
 $routes->get('/getvisitorrequestdata/(:num)', 'VisitorRequest::getVisitorRequastDataById/$1'); //To get Visito Request Data By ID
 

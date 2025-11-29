@@ -70,10 +70,10 @@
                         <h3 class="card-title">Visitor Request List</h3>
 
                         <div class="card-tools">
-                            <div class="input-group input-group-sm mx-2" >
+                            <div class="" >
                             <!-- <input type="button" name="add" class="form-control float-right" placeholder="Search"> -->
-                            
-                            <a href="<?= base_url('visitorequest') ?>" class="btn btn-warning mt-1"> New Request</a>
+                             <a href="<?= base_url('group_visito_request') ?>" class="btn btn-warning mx-1"> <i class="fa-solid fa-users"></i> Group Request</a>
+                            <a href="<?= base_url('visitorequest') ?>" class="btn btn-warning mx-1"> New Request</a>
                             </div>
                         </div>
                         </div>
@@ -122,6 +122,8 @@ $(document).on("click", ".approvalBtn", function () {
     approval(id, status,vcode);
 });
 
+
+// Resend QR To Mail Function 
 function resendqr() {
 
     let name = $("#v_name").text();
@@ -220,8 +222,8 @@ function loadVisitorList() {
                 let actions = "";
                 if (item.status === "pending") {
                     actions = `
-                        <button class="btn btn-success btn-sm approvalBtn" data-id="${item.id}" data-status="approved">Approve</button>
-                        <button class="btn btn-danger btn-sm approvalBtn" data-id="${item.id}" data-status="rejected">Reject</button>
+                        <button class="btn btn-success btn-sm approvalBtn mx-1" data-id="${item.id}" data-status="approved"><i class="fa-solid fa-check"></i></button>
+                        <button class="btn btn-danger btn-sm approvalBtn mx-1" data-id="${item.id}" data-status="rejected"><i class="fa-solid fa-xmark"></i></button>
                     `;
                 } else {
                     actions = `<span class="text-muted">--</span>`;
@@ -241,7 +243,7 @@ function loadVisitorList() {
                         <?php } ?>
                         <td>
                         <button class="btn btn-info btn-sm viewBtn" data-id="${item.id}">
-                        View
+                        <i class="fa-solid fa-eye"></i>
                         </button>
                         </td>
                     </tr>
@@ -289,14 +291,14 @@ $(document).on("click", ".viewBtn", function () {
 
             let buttons = '- -'
             if(data.status == 'pending'){
-                $("#sendButton ").hide();
+                $("#re-sendButton ").hide();
                buttons = `<button class="btn btn-success btn-sm approvalBtn"
                 data-id="${data.id}" data-vcode = "${data.v_code}" data-status="approved">Approve</button>
 
                 <button class="btn btn-danger btn-sm approvalBtn"
                 data-id="${data.id}" data-vcode = "${data.v_code}" data-status="rejected">Reject</button>`;
             }else{
-                 $("#sendButton ").show();
+                 $("#re-sendButton ").show();
             }
               $("#buttonContainer").html(buttons);
     

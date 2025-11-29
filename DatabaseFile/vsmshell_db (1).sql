@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Nov 28, 2025 at 12:40 PM
+-- Generation Time: Nov 29, 2025 at 12:49 PM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -175,6 +175,7 @@ CREATE TABLE `user_hashkeys` (
 CREATE TABLE `visitors` (
   `id` int(11) NOT NULL,
   `v_code` varchar(10) NOT NULL,
+  `group_code` varchar(20) NOT NULL,
   `visitor_name` varchar(200) NOT NULL,
   `visitor_email` varchar(200) NOT NULL,
   `visitor_phone` varchar(50) DEFAULT NULL,
@@ -203,16 +204,8 @@ CREATE TABLE `visitors` (
 -- Dumping data for table `visitors`
 --
 
-INSERT INTO `visitors` (`id`, `v_code`, `visitor_name`, `visitor_email`, `visitor_phone`, `purpose`, `visit_date`, `description`, `expected_from`, `expected_to`, `host_user_id`, `reference_id`, `status`, `created_by`, `created_at`, `updated_at`, `proof_id_type`, `proof_id_number`, `qr_code`, `vehicle_no`, `vehicle_type`, `vehicle_id_proof`, `visitor_id_proof`, `visit_time`) VALUES
-(3, 'V00001', 'mahesh', 'maheshkarna@gmail.com', '7894561234', 'Interview', '2025-11-27', 'test', NULL, NULL, 5, NULL, 'approved', 5, '2025-11-26 17:21:16', '2025-11-27 11:59:05', 'Aadhar Card', '582369745244', 'visitor_3_qr.png', '', '', '', '', '17:23:00'),
-(4, 'V00002', 'Ramesh', 'ravi@gmail.com', '7894561235', 'General Visit', '2025-11-28', 'TEST ', NULL, NULL, 5, NULL, 'approved', 5, '2025-11-27 09:25:23', '2025-11-27 09:44:35', 'PAN Card', 'TT1235', 'visitor_4_qr.png', ' AP25TST232', 'Bike', '', '', '09:26:00'),
-(5, 'V00003', 'Ravi Kumar', 'karnamahesh42@gmail.com', '8959562333', 'Interview', '2025-11-28', 'Test ', NULL, NULL, 5, NULL, 'approved', 5, '2025-11-28 11:26:29', '2025-11-28 12:30:49', 'Aadhar Card', '123456', 'visitor_5_qr.png', 'AP123RT215', 'Bike', '', '', '11:26:00'),
-(6, 'V00004', 'Sreenivas', 'ukmledp@ramojifilmcity.com', '1593574568', 'General Visit', '2025-11-29', 'TEST Visit', NULL, NULL, 5, NULL, 'approved', 5, '2025-11-28 11:44:53', '2025-11-28 11:45:05', 'Voter ID', '78956654', 'visitor_6_qr.png', 'AP123RT215', 'Car', '', '', '11:51:00'),
-(7, 'V00005', 'Sreenivas T', 'ukmledp@ramojifilmcity.com', '1593574568', 'General Visit', '2025-11-29', 'Test', NULL, NULL, 5, NULL, 'approved', 5, '2025-11-28 12:01:42', '2025-11-28 12:01:52', 'PAN Card', '123543', 'visitor_7_qr.png', '1255DSS22', 'Car', '', '', '12:02:00'),
-(8, 'V00006', 'Ramesh', 'karnamahesh42@gmail.com', '8919146333', 'Meeting', '2025-11-29', 'Test', NULL, NULL, 5, NULL, 'approved', 5, '2025-11-28 12:33:14', '2025-11-28 12:33:28', 'PAN Card', '12354685', 'visitor_8_qr.png', ' AP25TST232', 'Car', '', '', '12:33:00'),
-(9, 'V00007', 'Krishna Vasireddy', 'krishna.vasireddy@gmail.com', '9100060606', 'Meeting', '2025-11-28', 'xyz', NULL, NULL, 9, NULL, 'approved', 9, '2025-11-28 12:41:40', '2025-11-28 12:42:25', 'Aadhar Card', '565468-8878629-987727', 'visitor_9_qr.png', 'TS07HS5099', 'Car', '', '', '13:40:00'),
-(10, 'V00008', 'Sailesh Kumar T', 'karnamahesh42@gmail.com', '1593574568', 'Interview', '2025-11-29', 'Test', NULL, NULL, 5, NULL, 'approved', 5, '2025-11-28 14:17:06', '2025-11-28 14:21:50', 'PAN Card', '1234856', 'visitor_10_qr.png', 'TEST123456', 'Car', '', '', '14:16:00'),
-(11, 'V00009', 'mahesh', 'ravi@gmail.com', '7894561234', 'Meeting', '2025-11-29', ' test', NULL, NULL, 9, NULL, 'pending', 9, '2025-11-28 16:46:25', '2025-11-28 16:46:25', 'Aadhar Card', '1111111', NULL, ' AP25TST232', 'Car', '', '', '16:46:00');
+INSERT INTO `visitors` (`id`, `v_code`, `group_code`, `visitor_name`, `visitor_email`, `visitor_phone`, `purpose`, `visit_date`, `description`, `expected_from`, `expected_to`, `host_user_id`, `reference_id`, `status`, `created_by`, `created_at`, `updated_at`, `proof_id_type`, `proof_id_number`, `qr_code`, `vehicle_no`, `vehicle_type`, `vehicle_id_proof`, `visitor_id_proof`, `visit_time`) VALUES
+(1, 'V000001', 'GV000001', 'mahesh', 'maheshkarna@gmail.com', '7894561234', 'Interview', '2025-11-29', ' Test Visit', NULL, NULL, 5, NULL, 'approved', 5, '2025-11-29 15:01:27', '2025-11-29 16:50:48', 'Aadhar Card', '1234856', 'visitor_1_qr.png', ' AP25TST232', 'Car', '', '', '15:02:00');
 
 -- --------------------------------------------------------
 
@@ -236,25 +229,8 @@ CREATE TABLE `visitor_logs` (
 --
 
 INSERT INTO `visitor_logs` (`id`, `visitor_request_id`, `action_type`, `old_status`, `new_status`, `remarks`, `performed_by`, `performed_at`) VALUES
-(2, 3, 'Created', NULL, 'pending', '--', 5, '2025-11-26 17:21:16'),
-(3, 4, 'Created', NULL, 'pending', '--', 5, '2025-11-27 09:25:23'),
-(4, 4, 'approved', 'pending', 'approved', '', 5, '2025-11-27 09:44:34'),
-(5, 3, 'approved', 'pending', 'approved', '', 5, '2025-11-27 11:59:05'),
-(6, 5, 'Created', NULL, 'pending', '--', 5, '2025-11-28 11:26:29'),
-(7, 5, 'approved', 'pending', 'approved', '', 5, '2025-11-28 11:27:01'),
-(8, 6, 'Created', NULL, 'pending', '--', 5, '2025-11-28 11:44:53'),
-(9, 6, 'approved', 'pending', 'approved', '', 5, '2025-11-28 11:45:05'),
-(10, 7, 'Created', NULL, 'pending', '--', 5, '2025-11-28 12:01:42'),
-(11, 7, 'approved', 'pending', 'approved', '', 5, '2025-11-28 12:01:51'),
-(12, 8, 'Created', NULL, 'pending', '--', 5, '2025-11-28 12:33:14'),
-(13, 8, 'approved', 'pending', 'approved', '', 5, '2025-11-28 12:33:26'),
-(14, 8, 'approved', 'approved', 'approved', '', 5, '2025-11-28 12:33:28'),
-(15, 9, 'Created', NULL, 'pending', '--', 9, '2025-11-28 12:41:40'),
-(16, 9, 'approved', 'pending', 'approved', '', 9, '2025-11-28 12:42:25'),
-(17, 10, 'Created', NULL, 'pending', '--', 5, '2025-11-28 14:17:06'),
-(18, 10, 'approved', 'pending', 'approved', '', 5, '2025-11-28 14:21:49'),
-(19, 10, 'approved', 'approved', 'approved', '', 5, '2025-11-28 14:21:50'),
-(20, 11, 'Created', NULL, 'pending', '--', 9, '2025-11-28 16:46:25');
+(1, 1, 'Created', NULL, 'pending', '--', 5, '2025-11-29 15:01:27'),
+(2, 1, 'approved', 'pending', 'approved', '', 5, '2025-11-29 16:50:47');
 
 --
 -- Indexes for dumped tables
@@ -366,13 +342,13 @@ ALTER TABLE `user_hashkeys`
 -- AUTO_INCREMENT for table `visitors`
 --
 ALTER TABLE `visitors`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT for table `visitor_logs`
 --
 ALTER TABLE `visitor_logs`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=21;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- Constraints for dumped tables

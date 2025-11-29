@@ -19,6 +19,7 @@ public function sendMail()
         // QR file path
         $qrFileName = "visitor_{$vid}_qr.png";
         $qrFullPath = FCPATH . "public/uploads/qr_codes/" . $qrFileName;
+
         // Convert image to Base64
         $qrData = base64_encode(file_get_contents($qrFullPath));
         $qrBase64 = 'data:image/png;base64,' . $qrData; 
@@ -46,18 +47,18 @@ public function sendMail()
         $qrCid = $emailService->setAttachmentCID($qrFullPath);
 
         // Load template
-        $message = view('emails/visitor_template', [
+        $message = view('emails/visitor_mail_template', [
             'name'    => $name,
             'phone'   => $phone,
             'purpose' => $purpose,
             'vid'     => $vid,
             'qrBase64' => $qrBase64,
-            'v_code'  => $v_code
+            'v_code'  => $v_code,
+            'qr_path'  => "public/uploads/qr_codes/" . $qrFileName
         ]);
 
         $emailService->setMessage($message);
         $emailService->attach($qrFullPath);  // example: QR code attachment
-
 
         if ($emailService->send()) {
             return $this->response->setJSON(['status' => 'success']);

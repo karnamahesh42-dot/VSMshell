@@ -9,6 +9,7 @@ class VisitorRequestModel extends Model
 
     protected $allowedFields = [
         'v_code',
+        'group_code',
         'visitor_name',
         'visitor_email',
         'visitor_phone',
