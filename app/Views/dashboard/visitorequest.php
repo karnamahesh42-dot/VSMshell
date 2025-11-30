@@ -193,29 +193,23 @@
 
         success: function(res){
             if(res.status === "success"){
-                $("#visitorForm")[0].reset();
-
+                $("#visitorForm")[0].reset();  
                 Swal.fire({
-                    position: 'top-end',
-                    toast: true,
-                    icon: 'success',
-                    title: 'Visitor Saved Successfully',
-                    showConfirmButton: false,
-                    timer: 3000,
-                    timerProgressBar: true
+                icon: "success",
+                title: "Visitor Saved Successfully",
+                timer: 1200,
+                showConfirmButton: false
                 });
+                setTimeout(() => location.reload(), 1200);
             }
         },
 
         error: function(){
             Swal.fire({
-                position: 'top-end',
-                toast: true,
                 icon: 'error',
                 title: 'Something went wrong!',
                 showConfirmButton: false,
-                timer: 3000,
-                timerProgressBar: true
+                timer: 1200,
             });
         }
     });

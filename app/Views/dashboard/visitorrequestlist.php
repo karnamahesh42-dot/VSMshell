@@ -126,13 +126,24 @@ $(document).on("click", ".approvalBtn", function () {
 // Resend QR To Mail Function 
 function resendqr() {
 
+     // 1️⃣ Show loader
+    Swal.fire({
+        title: 'Processing...',
+        text: 'Please wait',
+        allowOutsideClick: false,
+        allowEscapeKey: false,
+        didOpen: () => {
+            Swal.showLoading();
+        }
+    });
+
     let name = $("#v_name").text();
     let email = $("#v_email").text();
     let phone = $("#v_phone").text();
     let purpose = $("#v_purpose").text();
     let vid =$('#v_id').val(); // << QR Image URL or Base64
     let v_code =$('#v_code').text(); // V_Code
-  
+
     $.ajax({
         url: "<?= base_url('send-email') ?>",
         type: "POST",
@@ -147,6 +158,10 @@ function resendqr() {
         dataType: "json",
         success: function(data) {
             if (data.status === "success") {
+
+                 // 2️⃣ Close loader
+            Swal.close();
+
                 Swal.fire({
                     position: 'top-end',
                     toast: true,
@@ -157,42 +172,81 @@ function resendqr() {
                 });
             } else {
 
-                console.log(data);
+          // 2️⃣ Close loader
+            Swal.close();
+            
                 Swal.fire("Error", "Mail Not Sent", "error");
             }
         }
     });
 }
 
-function approval(id, status,vcode) {
+
+function approval(id, status, vcode) {
+
+    // 1️⃣ Show loader
+    Swal.fire({
+        title: 'Processing...',
+        text: 'Please wait',
+        allowOutsideClick: false,
+        allowEscapeKey: false,
+        didOpen: () => {
+            Swal.showLoading();
+        }
+    });
 
     $.ajax({
         url: "<?= base_url('/approvalprocess') ?>",
         type: "POST",
-        data: { id: id, status: status ,v_code : vcode },
+        data: { id: id, status: status, v_code: vcode },
         dataType: "json",
+
         success: function (res) {
 
+            // 2️⃣ Close loader
+            Swal.close();
+
+            // 3️⃣ Show result popup
             if (res.status === "success") {
 
                 Swal.fire({
-                position: 'top-end',
-                toast: true,
-                icon: 'success',
-                title: 'Action Completed', 
-                showConfirmButton: false,
-                timer: 2000,
-                timerProgressBar: true,
-                backgroundColor: '#cf4040ff',
-                titleColor: '#fff',
-                }) 
-                loadVisitorList();  // Refresh table immediately
+                    icon: 'success',
+                    title: 'Action Completed Successfully!',
+                    showConfirmButton: false,
+                    timer: 1800
+                });
+
+                // 4️⃣ Refresh visitor list
+                loadVisitorList();
+
             } else {
-                alert("Failed to update!");
+
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Update Failed!',
+                    text: res.message ?? "Please try again",
+                    confirmButtonColor: '#d33'
+                });
             }
+        },
+
+        error: function () {
+
+            Swal.close();
+
+            Swal.fire({
+                icon: 'error',
+                title: 'Server Error!',
+                text: 'Something went wrong.',
+                confirmButtonColor: '#d33'
+            });
         }
     });
 }
+
+
+
+
 
 $(document).ready(function() {
     loadVisitorList();
@@ -254,7 +308,6 @@ function loadVisitorList() {
         }
     });
 }
-
 
 
 $(document).on("click", ".viewBtn", function () {

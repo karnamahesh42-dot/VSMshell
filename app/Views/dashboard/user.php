@@ -36,7 +36,7 @@
                     </div>
                     <!-- /.card-header -->
                     <!-- form start -->
-                   <form class="form-horizontal" method="post" action="<?= base_url('user/create') ?>">
+                   <form class="form-horizontal" method="post"  id="createUserForm">
                     <div class="card-body">
 
                     <!-- Company Name -->
@@ -46,8 +46,8 @@
                             <select name="company_name" class="form-control" required>
                                 <option value="">Select Company</option>
                                 <option value="UKML">UKML</option>
-                                <option value="UKML">DHPL</option>
-                                <option value="UKML">ETPL</option>
+                                <option value="DHPL">DHPL</option>
+                                <option value="ETPL">ETPL</option>
                             </select>
                             <!-- <input type="text" name="company_name" class="form-control" placeholder="Enter Company Name" required> -->
                         </div>
@@ -59,14 +59,29 @@
                         <div class="col-sm-10">
                             <select name="department_id" class="form-control" required>
                                 <option value="">Select Department</option>
-                                <option value="1">HR</option>
-                                <option value="2">IT</option>
-                                <option value="3">Finance</option>
-                                <option value="4">Marketing</option>
+                                <?php foreach ($departments as $dept): ?>
+                                <option value="<?= $dept['id'] ?>">
+                                <?= esc($dept['department_name']) ?>
+                                </option>
+                                <?php endforeach; ?>
                             </select>
                         </div>
                     </div>
+                      <!-- Email -->
+                      <div class="form-group row">
+                          <label class="col-sm-2 col-form-label">Email</label>
+                          <div class="col-sm-10">
+                              <input type="email" name="email" class="form-control" placeholder="Enter Email" required>
+                          </div>
+                      </div>
 
+                      <!-- Employee Code -->
+                      <div class="form-group row">
+                          <label class="col-sm-2 col-form-label">Employee Code</label>
+                          <div class="col-sm-10">
+                              <input type="text" name="employee_code" class="form-control" placeholder="Enter Employee Code" required>
+                          </div>
+                      </div>
                     <!-- Username -->
                     <div class="form-group row">
                         <label class="col-sm-2 col-form-label">Username</label>
@@ -91,12 +106,12 @@
                                 <option value="">Select Role</option>
                                 <option value="2">Admin</option>
                                 <option value="3">User</option>
+                                <option value="4">Security</option>
                             </select>
                         </div>
                     </div>
 
                     </div>
-
                     <!-- Submit / Cancel Buttons -->
                     <div class="card-footer">
                     <button type="submit" class="btn btn-primary">Save User</button>
@@ -118,3 +133,40 @@
       <!--end::App Main-->
      
   <?= $this->include('/dashboard/layouts/footer') ?>
+
+  <script>
+    $("#createUserForm").on("submit", function(e) {
+    e.preventDefault();
+
+    $.ajax({
+        url: "<?= base_url('user/create') ?>",
+        type: "POST",
+        data: $(this).serialize(),
+        dataType: "json",
+
+        success: function(res){
+            if (res.status === "success") {
+                Swal.fire({
+                    icon: "success",
+                    title: "User Created!",
+                    text: res.message,
+                    timer: 1500,
+                    showConfirmButton: false
+                });
+
+                setTimeout(() => {
+                    window.location.href = "<?= base_url('userlist') ?>";
+                }, 1500);
+
+            } else {
+                Swal.fire({
+                    icon: "error",
+                    title: "Error",
+                    text: res.message
+                });
+            }
+        }
+    });
+});
+
+  </script>

@@ -16,6 +16,10 @@ $routes->post('/login', 'Login::checkLogin');
 $routes->get('/user', 'User::index');
 $routes->post('/user/create', 'User::create');
 $routes->get('/userlist', 'User::userListData');
+$routes->get('/user/get/(:num)', 'User::get/$1');
+$routes->post('user/update', 'User::update');
+$routes->post('user/toggleStatus', 'User::toggleStatus');
+
 
 $routes->get('/visitorequest', 'VisitorRequest::index'); // add User Form
 $routes->get('/group_visito_request', 'VisitorRequest::groupVisitorRequestForm'); // add User Form
@@ -41,6 +45,7 @@ $routes->get('reference_visitor_request', 'ReferenceVisitorRequestController::in
 $routes->get('/rvr_list', 'ReferenceVisitorRequestController::getAllReferenceVisitorRequest'); // List Data (AJAX)
 $routes->get('/get_reference_list', 'ReferenceVisitorRequestController::getAllReference'); // get list Of reference Data  (AJAX)
 $routes->get('rvr_request_by_id/(:num)', 'ReferenceVisitorRequestController::getReferenceVisitorRequestById/$1'); //reference Request Data By id 
+
 
 
 // Redirect using RVR code

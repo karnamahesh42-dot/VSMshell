@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Nov 29, 2025 at 12:49 PM
+-- Generation Time: Nov 30, 2025 at 06:01 PM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -91,17 +91,6 @@ CREATE TABLE `reference_visitor_requests` (
   `created_at` timestamp NOT NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
---
--- Dumping data for table `reference_visitor_requests`
---
-
-INSERT INTO `reference_visitor_requests` (`id`, `rvr_code`, `reference_id`, `purpose`, `visit_date`, `visitor_count`, `description`, `status`, `created_by`, `created_at`) VALUES
-(5, 'RVR0001', 1, 'Event Purpose ', '2025-11-27', 10, 'xyz', 1, 5, '2025-11-26 10:51:35'),
-(6, 'RVR0002', 3, 'Event Purpose', '2025-11-28', 50, 'trestydft', 1, 5, '2025-11-27 06:32:12'),
-(7, 'RVR0003', 4, 'recce', '2025-11-28', 20, 'xxcxdkl,l,a,', 1, 5, '2025-11-28 07:18:28'),
-(8, 'RVR0004', 3, 'event', '2025-11-29', 10, '', 1, 9, '2025-11-28 09:12:45'),
-(9, 'RVR0005', 3, 'event', '2025-11-29', 25, '', 1, 9, '2025-11-28 09:16:17');
-
 -- --------------------------------------------------------
 
 --
@@ -119,6 +108,7 @@ CREATE TABLE `roles` (
 
 INSERT INTO `roles` (`id`, `role_name`) VALUES
 (2, 'admin'),
+(4, 'security'),
 (1, 'superadmin'),
 (3, 'user');
 
@@ -135,23 +125,28 @@ CREATE TABLE `users` (
   `username` varchar(50) NOT NULL,
   `password` varchar(255) NOT NULL,
   `role_id` int(11) NOT NULL,
+  `active` tinyint(1) NOT NULL DEFAULT 1,
   `hash_key` varchar(255) DEFAULT NULL,
   `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
-  `created_by` int(11) DEFAULT current_timestamp()
+  `created_by` int(11) DEFAULT current_timestamp(),
+  `email` varchar(150) NOT NULL,
+  `employee_code` varchar(50) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `users`
 --
 
-INSERT INTO `users` (`id`, `company_name`, `department_id`, `username`, `password`, `role_id`, `hash_key`, `created_at`, `created_by`) VALUES
-(1, 'UKMPL', 1, 'superadmin', '274d015c638f62ba24b19ca23c9c9503', 1, 'HASHKEY123', '2025-11-20 09:28:43', NULL),
-(5, 'UKMPL', 1, 'admin', '457b2f73cbdf3cc57b92efc0aa80cb99', 2, 'HASHKEY123', '2025-11-21 05:54:24', 1),
-(6, 'UKMPL', 3, 'user2', 'e27f4a867eaceaa81eca368d175a7716', 3, 'HASHKEY123', '2025-11-21 22:15:08', 1),
-(7, 'UKMPL', 3, 'admin2', 'bde72de2ac7798197faa307a4df2db69', 2, 'HASHKEY123', '2025-11-22 05:56:17', 1),
-(8, 'UKML', 1, 'user', 'd8847b1ec55e603141803c54ac610489', 3, 'HASHKEY123', '2025-11-24 00:22:13', 1),
-(9, 'UKML', 2, 'userlog', 'df15e08a109a1ca36c6129c4033dff9a', 3, 'HASHKEY123', '2025-11-24 03:40:59', 1),
-(10, 'UKML', 4, 'hod', 'c0da0e7607981099b9874324911d646b', 2, 'HASHKEY123', '2025-11-27 23:56:49', 5);
+INSERT INTO `users` (`id`, `company_name`, `department_id`, `username`, `password`, `role_id`, `active`, `hash_key`, `created_at`, `created_by`, `email`, `employee_code`) VALUES
+(1, 'UKMPL', 1, 'superadmin', '274d015c638f62ba24b19ca23c9c9503', 1, 1, 'HASHKEY123', '2025-11-20 09:28:43', NULL, '', ''),
+(5, 'UKMPL', 1, 'admin', '457b2f73cbdf3cc57b92efc0aa80cb99', 2, 1, 'HASHKEY123', '2025-11-21 05:54:24', 1, 'mahesh@gmail.com', '123456'),
+(6, 'UKMPL', 3, 'user2', 'e27f4a867eaceaa81eca368d175a7716', 3, 1, 'HASHKEY123', '2025-11-21 22:15:08', 1, '', ''),
+(7, 'UKMPL', 3, 'admin2', 'bde72de2ac7798197faa307a4df2db69', 2, 1, 'HASHKEY123', '2025-11-22 05:56:17', 1, '', ''),
+(8, 'UKML', 1, 'user', 'd8847b1ec55e603141803c54ac610489', 3, 1, 'HASHKEY123', '2025-11-24 00:22:13', 1, '', ''),
+(9, 'UKML', 2, 'userlog', 'df15e08a109a1ca36c6129c4033dff9a', 3, 1, 'HASHKEY123', '2025-11-24 03:40:59', 1, '', ''),
+(10, 'UKML', 4, 'hod', 'c0da0e7607981099b9874324911d646b', 2, 1, 'HASHKEY123', '2025-11-27 23:56:49', 5, '', ''),
+(11, 'UKML', 2, 'FINANCEHOD', 'e27f4a867eaceaa81eca368d175a7716', 2, 1, 'HASHKEY123', '2025-11-30 09:57:12', 5, 'maheshkarna42@gmail.com', '2523011'),
+(12, 'UKML', 3, 'hrhod', 'f271d1efdfba760f7145d4436f845b8e', 2, 1, NULL, '2025-11-30 15:37:58', 5, 'test@gmail.com', '123456');
 
 -- --------------------------------------------------------
 
@@ -163,6 +158,7 @@ CREATE TABLE `user_hashkeys` (
   `id` int(11) NOT NULL,
   `user_id` int(11) NOT NULL,
   `hash_key` varchar(255) NOT NULL,
+  `pass_key` varchar(50) NOT NULL,
   `created_at` timestamp NOT NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
@@ -205,7 +201,10 @@ CREATE TABLE `visitors` (
 --
 
 INSERT INTO `visitors` (`id`, `v_code`, `group_code`, `visitor_name`, `visitor_email`, `visitor_phone`, `purpose`, `visit_date`, `description`, `expected_from`, `expected_to`, `host_user_id`, `reference_id`, `status`, `created_by`, `created_at`, `updated_at`, `proof_id_type`, `proof_id_number`, `qr_code`, `vehicle_no`, `vehicle_type`, `vehicle_id_proof`, `visitor_id_proof`, `visit_time`) VALUES
-(1, 'V000001', 'GV000001', 'mahesh', 'maheshkarna@gmail.com', '7894561234', 'Interview', '2025-11-29', ' Test Visit', NULL, NULL, 5, NULL, 'approved', 5, '2025-11-29 15:01:27', '2025-11-29 16:50:48', 'Aadhar Card', '1234856', 'visitor_1_qr.png', ' AP25TST232', 'Car', '', '', '15:02:00');
+(1, 'V000001', 'GV000001', 'mahesh', 'mahesh@gmail.com', '8959586333', 'Meeting', '2025-11-30', 'To Meet CITO ', NULL, NULL, 5, NULL, 'pending', 5, '2025-11-30 21:57:29', '2025-11-30 21:57:29', 'PAN Card', '123456', NULL, '123AP', 'Bike', '', '', '21:55:00'),
+(2, 'V000002', 'GV000001', 'ramesh', 'maheshkarna42@gmail.com', '8959586333', 'Meeting', '2025-11-30', 'To Meet CITO ', NULL, NULL, 5, NULL, 'approved', 5, '2025-11-30 21:57:29', '2025-11-30 22:24:00', 'PAN Card', '321PAN', 'visitor_2_qr.png', '123AP', 'Bike', '', '', '21:56:00'),
+(3, 'V000003', 'GV000002', 'prakash', 'prakash@gmail.com', '8965689666', 'Meeting', '2025-12-01', 'To Meet Electrical HOD', NULL, NULL, 5, NULL, 'approved', 5, '2025-11-30 21:59:26', '2025-11-30 22:14:42', 'PAN Card', '1586PAN', 'visitor_3_qr.png', 'V125APA', 'Car', '', '', '21:58:00'),
+(4, 'V000004', 'GV000003', 'vamsi T', 'vamsi@gmail.com', '8959563333', 'Interview', '2025-12-01', 'Project Meet Purpose ', NULL, NULL, 5, NULL, 'approved', 5, '2025-11-30 22:04:49', '2025-11-30 22:10:15', 'PAN Card', '25655585', 'visitor_4_qr.png', '', 'Car', '', '', '09:09:00');
 
 -- --------------------------------------------------------
 
@@ -229,8 +228,13 @@ CREATE TABLE `visitor_logs` (
 --
 
 INSERT INTO `visitor_logs` (`id`, `visitor_request_id`, `action_type`, `old_status`, `new_status`, `remarks`, `performed_by`, `performed_at`) VALUES
-(1, 1, 'Created', NULL, 'pending', '--', 5, '2025-11-29 15:01:27'),
-(2, 1, 'approved', 'pending', 'approved', '', 5, '2025-11-29 16:50:47');
+(1, 1, 'Created', NULL, 'pending', '--', 5, '2025-11-30 21:57:29'),
+(2, 2, 'Created', NULL, 'pending', '--', 5, '2025-11-30 21:57:29'),
+(3, 3, 'Created', NULL, 'pending', '--', 5, '2025-11-30 21:59:26'),
+(4, 4, 'Created', NULL, 'pending', '--', 5, '2025-11-30 22:04:49'),
+(5, 4, 'approved', 'pending', 'approved', '', 5, '2025-11-30 22:10:14'),
+(6, 3, 'approved', 'pending', 'approved', '', 5, '2025-11-30 22:14:41'),
+(7, 2, 'approved', 'pending', 'approved', '', 5, '2025-11-30 22:15:44');
 
 --
 -- Indexes for dumped tables
@@ -318,19 +322,19 @@ ALTER TABLE `reference`
 -- AUTO_INCREMENT for table `reference_visitor_requests`
 --
 ALTER TABLE `reference_visitor_requests`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT for table `roles`
 --
 ALTER TABLE `roles`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
 
 --
 -- AUTO_INCREMENT for table `user_hashkeys`
@@ -342,13 +346,13 @@ ALTER TABLE `user_hashkeys`
 -- AUTO_INCREMENT for table `visitors`
 --
 ALTER TABLE `visitors`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT for table `visitor_logs`
 --
 ALTER TABLE `visitor_logs`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 
 --
 -- Constraints for dumped tables
@@ -371,8 +375,7 @@ ALTER TABLE `reference_visitor_requests`
 --
 ALTER TABLE `users`
   ADD CONSTRAINT `users_ibfk_1` FOREIGN KEY (`department_id`) REFERENCES `departments` (`id`),
-  ADD CONSTRAINT `users_ibfk_2` FOREIGN KEY (`role_id`) REFERENCES `roles` (`id`),
-  ADD CONSTRAINT `users_ibfk_3` FOREIGN KEY (`created_by`) REFERENCES `users` (`id`);
+  ADD CONSTRAINT `users_ibfk_2` FOREIGN KEY (`role_id`) REFERENCES `roles` (`id`);
 
 --
 -- Constraints for table `user_hashkeys`

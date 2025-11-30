@@ -12,9 +12,12 @@ class UserModel extends Model
     protected $allowedFields = [
     'company_name',
     'department_id',
+    'email',
+    'employee_code',
     'username',
     'password',
     'role_id',
+    'active',
     'hash_key',
     'created_by',
     'created_at'
@@ -29,7 +32,7 @@ class UserModel extends Model
     // Secure Login Function
     public function checkLoginModel($username, $password)
     {
-        $sql = "SELECT * FROM users WHERE username = ? LIMIT 1";
+        $sql = "SELECT * FROM users WHERE username = ?  AND active = 1 LIMIT 1";
         $query = $this->db->query($sql, [$username]);
         $user = $query->getRow();
 
@@ -44,5 +47,12 @@ class UserModel extends Model
         }
 
         return $user;
+        
+    }
+    
+    public function get($id)
+    {
+        $model = new UserModel();
+        return $this->response->setJSON($model->find($id));
     }
 }
